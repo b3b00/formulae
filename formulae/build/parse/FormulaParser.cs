@@ -4,7 +4,7 @@ using formulae.model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace formulae.build
+namespace formulae.build.parse
 {
 
 
@@ -13,7 +13,7 @@ namespace formulae.build
 
         [Operation((int)FormulaToken.PLUS, Affix.InFix, Associativity.Right, 10)]
         [Operation("MINUS", Affix.InFix, Associativity.Left, 10)]
-        public IFormula BinaryTermExpression(IFormula left, Token<FormulaToken> operation, IFormula right)
+        public IFormula BinaryTermExpression(IExpression left, Token<FormulaToken> operation, IExpression right)
         {
             return new BinaryExpression(left,operation.TokenID,right);
         }
@@ -21,20 +21,20 @@ namespace formulae.build
 
         [Operation((int)FormulaToken.TIMES, Affix.InFix, Associativity.Right, 50)]
         [Operation("DIV", Affix.InFix, Associativity.Left, 50)]
-        public IFormula BinaryFactorExpression(IFormula left, Token<FormulaToken> operation, IFormula right)
+        public IFormula BinaryFactorExpression(IExpression left, Token<FormulaToken> operation, IExpression right)
         {
             return new BinaryExpression(left,operation.TokenID,right);
         }
 
 
         [Operation((int)FormulaToken.MINUS, Affix.PreFix, Associativity.Right, 100)]
-        public IFormula MinusPreFixExpression(Token<FormulaToken> operation, IFormula value)
+        public IFormula MinusPreFixExpression(Token<FormulaToken> operation, IExpression value)
         {
             return new UnaryExpression(FormulaToken.MINUS,value);
         }
 
         [Operation((int)FormulaToken.NOT, Affix.PreFix, Associativity.Right, 100)]
-        public IFormula NotExpression(Token<FormulaToken> operation, IFormula value)
+        public IFormula NotExpression(Token<FormulaToken> operation, IExpression value)
         {
             return new UnaryExpression(FormulaToken.NOT,value);
         }
@@ -57,7 +57,7 @@ namespace formulae.build
 
         [Operand]
         [Production("group_value : LPAREN FormulaParser_expressions RPAREN")]
-        public IFormula OperandParens(Token<FormulaToken> lparen, IFormula value, Token<FormulaToken> rparen)
+        public IFormula OperandParens(Token<FormulaToken> lparen, IExpression value, Token<FormulaToken> rparen)
         {
             return value;
         }

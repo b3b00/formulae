@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace formulae.model
 {
     public class Formulae : IFormula
     {
-        public List<IFormula> Formulas { get; set; }
+        public List<Assignment> Formulas { get; set; }
 
         public Formulae(List<IFormula> formulas)
         {
-            Formulas = formulas;
+            Formulas = formulas.Cast<Assignment>().ToList();
         }
     }
 }

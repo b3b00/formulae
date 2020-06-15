@@ -1,4 +1,6 @@
-﻿using formulae.build;
+﻿using System.Collections.Generic;
+using System.Linq;
+using formulae.build.parse;
 
 namespace formulae.model
 {
@@ -6,14 +8,19 @@ namespace formulae.model
     {
         public FormulaToken Operation { get; set; }
         
-        public IFormula Left { get; set; }
-        public IFormula Right { get; set; }
+        public IExpression Left { get; set; }
+        public IExpression Right { get; set; }
 
-        public BinaryExpression(IFormula left, FormulaToken operation, IFormula right)
+        public BinaryExpression(IExpression left, FormulaToken operation, IExpression right)
         {
             Operation = operation;
             Right = right;
             Left = left;
+        }
+
+        public List<Variable> GetVariables()
+        {
+            return Left.GetVariables().Concat(Right.GetVariables()).ToList();
         }
     }
 }

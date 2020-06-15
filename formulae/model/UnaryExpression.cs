@@ -1,4 +1,5 @@
-﻿using formulae.build;
+﻿using formulae.build.parse;
+using System.Collections.Generic;
 
 namespace formulae.model
 {
@@ -6,13 +7,15 @@ namespace formulae.model
     {
         public FormulaToken Operation { get; set; }
         
-        public IFormula Expression { get; set; }
+        public IExpression Expression { get; set; }
 
-        public UnaryExpression(FormulaToken operation, IFormula expression)
+        public UnaryExpression(FormulaToken operation, IExpression expression)
         {
             Operation = operation;
             Expression = expression;
         }
+        
+        public List<Variable> GetVariables() => Expression.GetVariables();
         
         
     }

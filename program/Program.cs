@@ -1,5 +1,7 @@
 ﻿using System;
-using formulae.build;
+using formulae.build.dependencygraph;
+using formulae.build.parse;
+using formulae.build.typecheck;
 using formulae.model;
 using sly.parser.generator;
 
@@ -18,11 +20,18 @@ namespace program
 A = B + 1
 B = C + 2
 # oublie moi
-C = 3 + 3
+C = 3 + 3 / A
 
 ";
                 var t = parserResult.Result.Parse(source);
-                if (t.IsOk) {
+                if (t.IsOk)
+                {
+                    Formulae form = t.Result as Formulae;
+                    DependenciesBuilder depbuilder = new DependenciesBuilder();
+                    depbuilder.Build(t.Result as Formulae);
+                    depbuilder.Dump();
+                    TypeChecker checker = new TypeChecker();
+                    checker.Type(form, depbuilder.Dependencies);
                     Console.WriteLine("OK !");
                 }
                 else {

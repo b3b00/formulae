@@ -1,4 +1,6 @@
-﻿namespace formulae.model
+﻿using System.Collections.Generic;
+
+namespace formulae.model
 {
     public class Number : IExpression
     {
@@ -8,5 +10,7 @@
         {
             Value = value;
         }
+
+        public List<Variable> GetVariables() => new List<Variable>();
     }
 }

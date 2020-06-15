@@ -1,6 +1,6 @@
 using sly.lexer;
 
-namespace formulae.build {
+namespace formulae.build.parse {
 
     [Lexer(IgnoreEOL = false)]
     public enum FormulaToken {
