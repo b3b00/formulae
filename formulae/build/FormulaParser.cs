@@ -2,6 +2,7 @@ using sly.lexer;
 using sly.parser.generator;
 using formulae.model;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace formulae.build
 {
@@ -14,22 +15,7 @@ namespace formulae.build
         [Operation("MINUS", Affix.InFix, Associativity.Left, 10)]
         public IFormula BinaryTermExpression(IFormula left, Token<FormulaToken> operation, IFormula right)
         {
-            IFormula result = null;
-            switch (operation.TokenID)
-            {
-                case FormulaToken.PLUS:
-                    {
-                        result = null;
-                        break;
-                    }
-                case FormulaToken.MINUS:
-                    {
-                        result = null;
-                        break;
-                    }
-            }
-
-            return result;
+            return new BinaryExpression(left,operation.TokenID,right);
         }
 
 
@@ -37,35 +23,20 @@ namespace formulae.build
         [Operation("DIV", Affix.InFix, Associativity.Left, 50)]
         public IFormula BinaryFactorExpression(IFormula left, Token<FormulaToken> operation, IFormula right)
         {
-            IFormula result = null;
-            switch (operation.TokenID)
-            {
-                case FormulaToken.TIMES:
-                    {
-                        result = null;
-                        break;
-                    }
-                case FormulaToken.DIV:
-                    {
-                        result = null;
-                        break;
-                    }
-            }
-
-            return result;
+            return new BinaryExpression(left,operation.TokenID,right);
         }
 
 
         [Operation((int)FormulaToken.MINUS, Affix.PreFix, Associativity.Right, 100)]
         public IFormula MinusPreFixExpression(Token<FormulaToken> operation, IFormula value)
         {
-            return value;
+            return new UnaryExpression(FormulaToken.MINUS,value);
         }
 
         [Operation((int)FormulaToken.NOT, Affix.PreFix, Associativity.Right, 100)]
         public IFormula NotExpression(Token<FormulaToken> operation, IFormula value)
         {
-            return value;
+            return new UnaryExpression(FormulaToken.NOT,value);
         }
 
 
@@ -74,14 +45,14 @@ namespace formulae.build
         [Production("double_value : DOUBLE")]
         public IFormula OperandIFormula(Token<FormulaToken> value)
         {
-            return null;
+            return new Number(value.DoubleValue);
         }
 
         [Operand]
         [Production("int_value : INT")]
         public IFormula OperandInt(Token<FormulaToken> value)
         {
-            return null;
+            return new Number(value.DoubleValue);
         }
 
         [Operand]
@@ -95,15 +66,24 @@ namespace formulae.build
         [Production("id_value: ID")]
         public IFormula Id(Token<FormulaToken> id)
         {
-            return null;
+            return new Variable(id.Value);
         }
 
-        
+        [Operand]
+        [Production("bool_value: [ TRUE | FALSE ]")]
+        public IFormula Bool(Token<FormulaToken> boolean)
+        {
+            bool v = false;
+            bool.TryParse(boolean.Value, out v);
+            return new Boolean(v);
+        }
+
+
 
 
         [Production("formula : ID SET[d] FormulaParser_expressions [ WIN_EOL | IX_EOL | MAC_EOL ] [d]")]
-        public IFormula Formula(Token<FormulaToken> id, IFormula expression) {
-            return null;
+        public IFormula Formula(Token<FormulaToken> id, IExpression expression) {
+            return new Assignment(new Variable(id.Value), expression );
         }
 
         [Production("emptyLine : [ WIN_EOL | IX_EOL | MAC_EOL ] [d]")]
@@ -113,7 +93,7 @@ namespace formulae.build
 
         [Production("formulae : [ emptyLine | formula ] *")] 
         public IFormula Formulae(List<IFormula> formulas) {
-            return null;
+            return new Formulae(formulas.Where(x => x != null).ToList());
         }
 
 

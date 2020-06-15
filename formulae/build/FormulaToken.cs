@@ -58,7 +58,16 @@ namespace formulae.build {
         [Lexeme(GenericToken.SugarToken, "\n",IsLineEnding=true)] IX_EOL = 50,
 
         [SingleLineComment("#")]
-        COMMENT = 100
+        COMMENT = 100,
+        
+        [Lexeme(GenericToken.KeyWord,"TRUE")]
+            [Lexeme(GenericToken.KeyWord,"VRAI")]
+        TRUE = 150,
+        
+        [Lexeme(GenericToken.KeyWord,"FALSE")]
+        [Lexeme(GenericToken.KeyWord,"FAUX")]
+        FALSE = 151,
+        
 
     }
 }

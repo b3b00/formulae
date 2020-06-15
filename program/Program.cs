@@ -17,8 +17,9 @@ namespace program
                 string source = @"
 A = B + 1
 B = C + 2
-# commment
+# oublie moi
 C = 3 + 3
+
 ";
                 var t = parserResult.Result.Parse(source);
                 if (t.IsOk) {
