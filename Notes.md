@@ -49,6 +49,8 @@ les types de données seront
 
 Les tableaux doivent pouvoir être gérés : quelle représentation dans les formules ?
 
+**Idéalement , le typage devrait être automatique, par inférence.**
+
 les objet sont un concept plsu difficile à appréhender et ne seront pas gérés au moins dans un premier temps. 
 
 
