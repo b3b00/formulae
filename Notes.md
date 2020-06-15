@@ -1,10 +1,13 @@
 # Notes
 
 
-![spec 1](https://raw.githubusercontent.com/b3b00/formulae/master/specifications/IMG_20200614_152532.jpg)
 
-![spec 2](https://raw.githubusercontent.com/b3b00/formulae/master/specifications/IMG_20200614_152620.jpg)
+![notes 1]({{site.baseurl}}/specifications/IMG_20200614_152620.jpg)
+![notes 2]({{site.baseurl}}/specifications/IMG_20200614_152532.jpg)
 
+
+![note 1]({{site.baseurl}}//IMG_20200614_152620.jpg)
+![note 1]({{site.baseurl}}//IMG_20200614_152532.jpg)
 
 
 ## but
