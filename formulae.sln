@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "program", "program\program.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "formulae", "formulae\formulae.csproj", "{3C71C4A5-7E31-417F-95C6-A899D71DAEEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sly", "..\csly\sly\sly.csproj", "{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{3C71C4A5-7E31-417F-95C6-A899D71DAEEE}.Release|x64.Build.0 = Release|Any CPU
 		{3C71C4A5-7E31-417F-95C6-A899D71DAEEE}.Release|x86.ActiveCfg = Release|Any CPU
 		{3C71C4A5-7E31-417F-95C6-A899D71DAEEE}.Release|x86.Build.0 = Release|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Debug|x64.Build.0 = Debug|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Debug|x86.Build.0 = Debug|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Release|x64.ActiveCfg = Release|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Release|x64.Build.0 = Release|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Release|x86.ActiveCfg = Release|Any CPU
+		{C55FB9D0-4454-49F0-BD89-8A94E0C64F6D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

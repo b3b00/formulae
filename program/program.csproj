@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\csly\sly\sly.csproj" />
     <ProjectReference Include="..\formulae\formulae.csproj" />
   </ItemGroup>
 
