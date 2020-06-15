@@ -1,9 +1,9 @@
 # Notes
 
 
-![spec 1](/https://github.com/b3b00/formulae/raw/master/specifications/IMG_20200614_152532.jpg)
+![spec 1](https://raw.githubusercontent.com/b3b00/formulae/master/specifications/IMG_20200614_152532.jpg)
 
-![spec 2](/https://github.com/b3b00/formulae/raw/master/specifications/IMG_20200614_152620.jpg)
+![spec 2](https://raw.githubusercontent.com/b3b00/formulae/master/specifications/IMG_20200614_152620.jpg)
 
 
 
