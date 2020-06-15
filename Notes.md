@@ -17,7 +17,7 @@ Pour un sytème plus générique.
 
 ## description
 
-le système est décrite par un ensemble de formules d'affectations de variables.
+le système est décrit par un ensemble de formules d'affectations de variables.
 
 ```
 a = b + 1
@@ -25,6 +25,12 @@ b = <input>
 ```
 
 Des variables spéciales (<input>) permettent de désigner des valeurs à saisir par l'utilisateur (UI) ou le système (SQL, network...)
+
+module à part pour la description des interfaces ? 
+- UI
+- SQL
+- HTTP
+- ...
 
 ## fonctionnement
 
