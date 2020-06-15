@@ -1,5 +1,12 @@
 # Notes
 
+
+![spec 1]({{site.baseurl}}/https://github.com/b3b00/formulae/raw/master/specifications/IMG_20200614_152532.jpg)
+
+![spec 2]({{site.baseurl}}/https://github.com/b3b00/formulae/raw/master/specifications/IMG_20200614_152620.jpg)
+
+
+
 ## but
 Excel est un super outil de "dev"
 Le but est de reproduire sa simplicité à base formules simples et réactives
@@ -41,11 +48,3 @@ les objet sont un concept plsu difficile à appréhender et ne seront pas géré
 le système est une succession de transitions d'état. il est donc idéal pour utiliser de l'event sourcing (attention aux performances pour une durée de vie importante). 
 
 Avantage : les transitions sont plus simple à persister qu'un ensemble de données complet.
-
-
-
-
-
-
-
-
