@@ -1,5 +1,6 @@
 ﻿using System; 
 using System.Collections.Generic;
+using System.Linq;
 using System.Resources;
 
 namespace formulae.build.dependencygraph
@@ -33,6 +34,13 @@ namespace formulae.build.dependencygraph
             {
                 vertice.Visited = false;
             }
+        }
+
+        public bool IsIndependant => Vertices.Count == 0;
+
+        public override string ToString()
+        {
+            return $"{Name} => {string.Join(", ", Vertices.Select(x => x.Target.Name))}";
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using formulae.model;
 
 namespace formulae.build.dependencygraph
 {
@@ -27,7 +30,8 @@ namespace formulae.build.dependencygraph
 
         public Vertex GetVertex(string name) => Vertexes.FirstOrDefault(x => x.Name == name);
 
-
+        
+        
         public bool CheckCycle()
         {
             foreach (var vertex in Vertexes)
@@ -60,6 +64,17 @@ namespace formulae.build.dependencygraph
                 }
             }
             return cycle;
+        }
+        
+        public string Dump()
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (var vertex in Vertexes)
+            {
+                builder.AppendLine(vertex.ToString());
+            }
+
+            return builder.ToString();
         }
     }
 }
