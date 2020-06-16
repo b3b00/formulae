@@ -28,7 +28,7 @@ jobs:
       uses: allenevans/set-env@v1.0.0
       with:
           TESTS_PATH: './ParserTests'
-          PUBLISH_NUGET: false
+          PUBLISH_NUGET: true
           MAIN_CSPROJ: 'formulae/formulae.csproj'
     - name: Build with dotnet 
       run: dotnet build --configuration Release 
