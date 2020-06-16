@@ -52,8 +52,8 @@ namespace formulae.build.parse
         }
 
         [Operand]
-        [Production("group_value : LPAREN FormulaParser_expressions RPAREN")]
-        public IFormula OperandParens(Token<FormulaToken> lparen, IExpression value, Token<FormulaToken> rparen)
+        [Production("group_value : LPAREN[d] FormulaParser_expressions RPAREN[d]")]
+        public IFormula OperandParens(IExpression value)
         {
             return value;
         }
@@ -75,13 +75,13 @@ namespace formulae.build.parse
         }
 
 
-        [Production("formula : ID SET[d] FormulaParser_expressions [ WIN_EOL | IX_EOL | MAC_EOL ] [d]")]
+        [Production("formula : ID SET[d] FormulaParser_expressions [ WIN_EOL | IX_EOL ] [d]")]
         public IFormula Formula(Token<FormulaToken> id, IExpression expression)
         {
             return new Assignment(new Variable(id.Value), expression);
         }
 
-        [Production("emptyLine : [ WIN_EOL | IX_EOL | MAC_EOL ] [d]")]
+        [Production("emptyLine : [ WIN_EOL | IX_EOL ] [d]")]
         public IFormula EmptyLine()
         {
             return null;

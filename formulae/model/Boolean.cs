@@ -6,7 +6,7 @@ namespace formulae.model
     {
         public Boolean(bool value)
         {
-            value = value;
+            Value = value;
         }
 
         public bool Value { get; set; }

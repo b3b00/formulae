@@ -4,7 +4,9 @@ using formulae.build.parse;
 using formulae.build.typecheck;
 using formulae.engine;
 using formulae.model;
+using sly.lexer;
 using sly.parser.generator;
+using sly.parser.generator.visitor;
 using Xunit;
 
 namespace program
@@ -20,12 +22,18 @@ namespace program
             if (parserResult.IsOk)
             {
                 var source = @"
-A = B + 1
-B = C + 2
-# oublie moi
-C = 3 + 3 
+
+ddd = aaa == 1 
+aaa = bbb + 1
+bbb = ccc + 2
+ccc = 3 + 3 
+
 
 ";
+                var fsm = (parserResult.Result.Lexer as GenericLexer<FormulaToken>).FSMBuilder.Fsm;
+                
+                var grpah = fsm.ToGraphViz();
+                
                 var t = parserResult.Result.Parse(source);
                 if (t.IsOk)
                 {

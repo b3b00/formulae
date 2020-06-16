@@ -57,7 +57,7 @@ namespace formulae.engine
             }
         }
 
-        public string ToString()
+        public override string ToString()
         {
             var builder = new StringBuilder();
             foreach (var state in State) builder.AppendLine($"{state.Key} = {state.Value}");

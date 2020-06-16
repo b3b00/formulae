@@ -28,7 +28,7 @@ namespace formulae.build.dependencygraph
             Dependencies.Add(dependency);
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return $"{Variable.Name} => {string.Join(", ", Dependencies.Select(x => x.Variable.Name))}";
         }

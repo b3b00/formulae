@@ -55,11 +55,8 @@ namespace formulae.build.parse
         [Lexeme(GenericToken.SugarToken, "\r\n", IsLineEnding = true)]
         WIN_EOL = 50,
 
-        [Lexeme(GenericToken.SugarToken, "\r", IsLineEnding = true)]
-        MAC_EOL = 51,
-
         [Lexeme(GenericToken.SugarToken, "\n", IsLineEnding = true)]
-        IX_EOL = 50,
+        IX_EOL = 51,
 
         [SingleLineComment("#")] COMMENT = 100,
 
