@@ -5,6 +5,7 @@ on:
     branches: 
       - dev
       - tech/actions 
+      - master
   pull_request:
     branches: 
       - dev
