@@ -6,14 +6,14 @@ namespace formulae.build.dependencygraph
     // A C# Program to detect cycle in a graph 
 
 
-    public class Vertex
+    public class DependencyVertex
     {
-        public List<Vertice> Vertices;
+        public List<DependencyVertice> Vertices;
 
-        public Vertex(string name)
+        public DependencyVertex(string name)
         {
             Name = name;
-            Vertices = new List<Vertice>();
+            Vertices = new List<DependencyVertice>();
         }
 
         public string Name { get; set; }
@@ -22,9 +22,9 @@ namespace formulae.build.dependencygraph
 
         public bool IsIndependant => Vertices.Count == 0;
 
-        public void AddVertice(Vertex target)
+        public void AddVertice(DependencyVertex target)
         {
-            Vertices.Add(new Vertice(target));
+            Vertices.Add(new DependencyVertice(target));
         }
 
         public void Reset()

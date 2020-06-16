@@ -1,13 +1,13 @@
 ﻿namespace formulae.build.dependencygraph
 {
-    public class Vertice
+    public class DependencyVertice
     {
-        public Vertice(Vertex target)
+        public DependencyVertice(DependencyVertex target)
         {
             Target = target;
         }
 
-        public Vertex Target { get; set; }
+        public DependencyVertex Target { get; set; }
 
         public bool Visited { get; set; }
     }

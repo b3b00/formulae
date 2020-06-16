@@ -11,17 +11,17 @@ namespace formulae.engine
 {
     public class FormulaeEngine
     {
-        private readonly Graph DependencyGraph;
+        private readonly DependencyGraph DependencyGraph;
 
         private readonly Formulae Formulae;
-        private readonly Graph ReverseDependencyGraph;
+        private readonly DependencyGraph _reverseDependencyDependencyGraph;
 
         private readonly Dictionary<string, object> State;
 
         public FormulaeEngine(Dependencies dependencies, Formulae formulae)
         {
-            ReverseDependencyGraph = dependencies.ReverseGraph;
-            DependencyGraph = dependencies.Graph;
+            _reverseDependencyDependencyGraph = dependencies.ReverseDependencyGraph;
+            DependencyGraph = dependencies.DependencyGraph;
 
             Formulae = formulae;
             State = new Dictionary<string, object>();
@@ -34,7 +34,7 @@ namespace formulae.engine
 
             foreach (var vertex in DependencyGraph.Vertexes.Where(x => x.IsIndependant))
             {
-                var revertex = ReverseDependencyGraph.GetVertex(vertex.Name);
+                var revertex = _reverseDependencyDependencyGraph.GetVertex(vertex.Name);
                 Propagate(revertex);
             }
 
@@ -51,7 +51,7 @@ namespace formulae.engine
                 if (formula.Type == FormulaType.Number && !(value is double)) throw new Exception("bard type");
 
                 State[name] = value;
-                var vertex = ReverseDependencyGraph.GetVertex(name);
+                var vertex = _reverseDependencyDependencyGraph.GetVertex(name);
                 //Evaluate(vertex);
                 Propagate(vertex, false);
             }
@@ -75,13 +75,13 @@ namespace formulae.engine
 
         #region expressions evaluation
 
-        private void Propagate(Vertex vertex, bool evaluateVertex = true)
+        private void Propagate(DependencyVertex dependencyVertex, bool evaluateVertex = true)
         {
-            if (evaluateVertex) Evaluate(vertex);
+            if (evaluateVertex) Evaluate(dependencyVertex);
 
-            foreach (var vertice in vertex.Vertices)
+            foreach (var vertice in dependencyVertex.Vertices)
             {
-                var target = ReverseDependencyGraph.GetVertex(vertice.Target.Name);
+                var target = _reverseDependencyDependencyGraph.GetVertex(vertice.Target.Name);
                 Propagate(target);
             }
         }
@@ -144,12 +144,12 @@ namespace formulae.engine
             }
         }
 
-        private void Evaluate(Vertex vertex)
+        private void Evaluate(DependencyVertex dependencyVertex)
         {
             object value = null;
-            var formula = Formulae.Formulas.FirstOrDefault(x => x.Variable.Name == vertex.Name);
+            var formula = Formulae.Formulas.FirstOrDefault(x => x.Variable.Name == dependencyVertex.Name);
             if (formula != null) value = Evaluate(formula.Expression);
-            State[vertex.Name] = value;
+            State[dependencyVertex.Name] = value;
         }
 
         private object Evaluate(Number number)

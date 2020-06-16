@@ -4,14 +4,14 @@ using System.Text;
 
 namespace formulae.build.dependencygraph
 {
-    public class Graph
+    public class DependencyGraph
     {
-        public Graph()
+        public DependencyGraph()
         {
-            Vertexes = new List<Vertex>();
+            Vertexes = new List<DependencyVertex>();
         }
 
-        public List<Vertex> Vertexes { get; set; }
+        public List<DependencyVertex> Vertexes { get; set; }
 
         public void Reset()
         {
@@ -20,10 +20,10 @@ namespace formulae.build.dependencygraph
 
         public void AddVertex(string name)
         {
-            Vertexes.Add(new Vertex(name));
+            Vertexes.Add(new DependencyVertex(name));
         }
 
-        public Vertex GetVertex(string name)
+        public DependencyVertex GetVertex(string name)
         {
             return Vertexes.FirstOrDefault(x => x.Name == name);
         }
@@ -40,12 +40,12 @@ namespace formulae.build.dependencygraph
             return false;
         }
 
-        private bool CheckCycle(Vertex vertex)
+        private bool CheckCycle(DependencyVertex dependencyVertex)
         {
             var cycle = false;
-            if (vertex.Visited) return true;
-            vertex.Visited = true;
-            var vertices = vertex.Vertices.Where(v => !v.Visited);
+            if (dependencyVertex.Visited) return true;
+            dependencyVertex.Visited = true;
+            var vertices = dependencyVertex.Vertices.Where(v => !v.Visited);
             if (vertices.Any())
                 foreach (var vertice in vertices)
                 {

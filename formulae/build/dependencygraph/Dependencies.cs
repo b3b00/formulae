@@ -12,19 +12,19 @@ namespace formulae.build.dependencygraph
             DependenciesDictionary = new Dictionary<string, Dependency>();
         }
 
-        public Graph Graph { get; private set; }
+        public DependencyGraph DependencyGraph { get; private set; }
 
-        public Graph ReverseGraph { get; private set; }
+        public DependencyGraph ReverseDependencyGraph { get; private set; }
 
         public Dictionary<string, Dependency> DependenciesDictionary { get; }
 
         public void Dump()
         {
             Console.WriteLine("direct");
-            Console.WriteLine(Graph.Dump());
+            Console.WriteLine(DependencyGraph.Dump());
             Console.WriteLine();
             Console.WriteLine("reverse");
-            Console.WriteLine(ReverseGraph.Dump());
+            Console.WriteLine(ReverseDependencyGraph.Dump());
         }
 
         public bool Build(Formulae formulae)
@@ -56,16 +56,16 @@ namespace formulae.build.dependencygraph
                     }
             }
 
-            Graph = new Graph();
+            DependencyGraph = new DependencyGraph();
 
-            foreach (var dep in DependenciesDictionary) Graph.AddVertex(dep.Key);
+            foreach (var dep in DependenciesDictionary) DependencyGraph.AddVertex(dep.Key);
             foreach (var dep in DependenciesDictionary)
             {
-                var vertex = Graph.GetVertex(dep.Key);
-                foreach (var x in dep.Value.Dependencies) vertex.AddVertice(Graph.GetVertex(x.Variable.Name));
+                var vertex = DependencyGraph.GetVertex(dep.Key);
+                foreach (var x in dep.Value.Dependencies) vertex.AddVertice(DependencyGraph.GetVertex(x.Variable.Name));
             }
 
-            var cyclic = Graph.CheckCycle();
+            var cyclic = DependencyGraph.CheckCycle();
             if (!cyclic) buildReverseGraph();
 
             return cyclic;
@@ -73,20 +73,20 @@ namespace formulae.build.dependencygraph
 
         private void buildReverseGraph()
         {
-            ReverseGraph = new Graph();
-            foreach (var graphVertex in Graph.Vertexes) ReverseGraph.AddVertex(graphVertex.Name);
+            ReverseDependencyGraph = new DependencyGraph();
+            foreach (var graphVertex in DependencyGraph.Vertexes) ReverseDependencyGraph.AddVertex(graphVertex.Name);
 
-            foreach (var graphVertex in Graph.Vertexes)
+            foreach (var graphVertex in DependencyGraph.Vertexes)
             {
-                var vertex = ReverseGraph.GetVertex(graphVertex.Name);
+                var vertex = ReverseDependencyGraph.GetVertex(graphVertex.Name);
                 foreach (var vertice in graphVertex.Vertices)
-                    ReverseGraph.GetVertex(vertice.Target.Name).AddVertice(graphVertex);
+                    ReverseDependencyGraph.GetVertex(vertice.Target.Name).AddVertice(graphVertex);
             }
         }
 
-        public List<Vertex> GetDependant(string name)
+        public List<DependencyVertex> GetDependant(string name)
         {
-            return ReverseGraph.GetVertex(name).Vertices.Select(x => x.Target).ToList();
+            return ReverseDependencyGraph.GetVertex(name).Vertices.Select(x => x.Target).ToList();
         }
     }
 }
