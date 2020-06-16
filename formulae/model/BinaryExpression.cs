@@ -6,11 +6,6 @@ namespace formulae.model
 {
     public class BinaryExpression : IExpression
     {
-        public FormulaToken Operation { get; set; }
-        
-        public IExpression Left { get; set; }
-        public IExpression Right { get; set; }
-
         public BinaryExpression(IExpression left, FormulaToken operation, IExpression right)
         {
             Operation = operation;
@@ -18,11 +13,16 @@ namespace formulae.model
             Left = left;
         }
 
+        public FormulaToken Operation { get; set; }
+
+        public IExpression Left { get; set; }
+        public IExpression Right { get; set; }
+
         public List<Variable> GetVariables()
         {
             return Left.GetVariables().Concat(Right.GetVariables()).ToList();
         }
-        
+
         public FormulaType Type { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using formulae.build.dependencygraph;
@@ -12,10 +11,10 @@ namespace formulae.engine
 {
     public class FormulaeEngine
     {
-        private readonly Graph ReverseDependencyGraph;
         private readonly Graph DependencyGraph;
-        
+
         private readonly Formulae Formulae;
+        private readonly Graph ReverseDependencyGraph;
 
         private readonly Dictionary<string, object> State;
 
@@ -23,7 +22,7 @@ namespace formulae.engine
         {
             ReverseDependencyGraph = dependencies.ReverseGraph;
             DependencyGraph = dependencies.Graph;
-            
+
             Formulae = formulae;
             State = new Dictionary<string, object>();
             InitializeState();
@@ -31,36 +30,26 @@ namespace formulae.engine
 
         private void InitializeState()
         {
-            foreach (var vertex in DependencyGraph.Vertexes)
-            {
-                State[vertex.Name] = null;
-            }
+            foreach (var vertex in DependencyGraph.Vertexes) State[vertex.Name] = null;
 
             foreach (var vertex in DependencyGraph.Vertexes.Where(x => x.IsIndependant))
             {
                 var revertex = ReverseDependencyGraph.GetVertex(vertex.Name);
-                Propagate(revertex, true);
+                Propagate(revertex);
             }
 
             ;
         }
 
-        
 
         public void Set(string name, object value)
         {
             if (State.ContainsKey(name))
             {
                 var formula = Formulae.Formulas.First(x => x.Variable.Name == name);
-                if (formula.Type == FormulaType.Bool && !(value is bool))
-                {
-                    throw new Exception("bard type");
-                }
-                if (formula.Type == FormulaType.Number && !(value is double))
-                {
-                    throw new Exception("bard type");
-                }
-                
+                if (formula.Type == FormulaType.Bool && !(value is bool)) throw new Exception("bard type");
+                if (formula.Type == FormulaType.Number && !(value is double)) throw new Exception("bard type");
+
                 State[name] = value;
                 var vertex = ReverseDependencyGraph.GetVertex(name);
                 //Evaluate(vertex);
@@ -70,11 +59,8 @@ namespace formulae.engine
 
         public string ToString()
         {
-            StringBuilder builder = new StringBuilder();
-            foreach (var state in State)
-            {
-                builder.AppendLine($"{state.Key} = {state.Value}");
-            }
+            var builder = new StringBuilder();
+            foreach (var state in State) builder.AppendLine($"{state.Key} = {state.Value}");
 
             return builder.ToString();
         }
@@ -85,33 +71,29 @@ namespace formulae.engine
             State.TryGetValue(name, out value);
             return value;
         }
-        
-        
+
+
         #region expressions evaluation
-        
+
         private void Propagate(Vertex vertex, bool evaluateVertex = true)
         {
-            if (evaluateVertex)
-            {
-                Evaluate(vertex);
-            }
+            if (evaluateVertex) Evaluate(vertex);
 
             foreach (var vertice in vertex.Vertices)
             {
                 var target = ReverseDependencyGraph.GetVertex(vertice.Target.Name);
                 Propagate(target);
             }
-
         }
-        
+
         private object Evaluate(BinaryExpression binary)
         {
-            object left = Evaluate(binary.Left);
-            object right = Evaluate(binary.Right);
+            var left = Evaluate(binary.Left);
+            var right = Evaluate(binary.Right);
 
-            var leftComparable = ((IComparable) left);
-            var rightComparable = ((IComparable) right);
-            int comparison = leftComparable.CompareTo(rightComparable);
+            var leftComparable = (IComparable) left;
+            var rightComparable = (IComparable) right;
+            var comparison = leftComparable.CompareTo(rightComparable);
 
             switch (binary.Operation)
             {
@@ -160,19 +142,13 @@ namespace formulae.engine
                     return null;
                 }
             }
-
-
-
         }
-        
+
         private void Evaluate(Vertex vertex)
         {
             object value = null;
-            Assignment formula = Formulae.Formulas.FirstOrDefault(x => x.Variable.Name == vertex.Name) as Assignment;
-            if (formula != null)
-            {
-                value =  Evaluate(formula.Expression);
-            }
+            var formula = Formulae.Formulas.FirstOrDefault(x => x.Variable.Name == vertex.Name);
+            if (formula != null) value = Evaluate(formula.Expression);
             State[vertex.Name] = value;
         }
 
@@ -188,10 +164,7 @@ namespace formulae.engine
 
         private object Evaluate(Variable variable)
         {
-            if (State.ContainsKey(variable.Name))
-            {
-                return State[variable.Name];
-            }
+            if (State.ContainsKey(variable.Name)) return State[variable.Name];
 
             return null;
         }
@@ -211,7 +184,7 @@ namespace formulae.engine
 
         private object Evaluate(UnaryExpression unary)
         {
-            object val = Evaluate(unary.Expression);
+            var val = Evaluate(unary.Expression);
             switch (unary.Operation)
             {
                 case FormulaToken.MINUS:
@@ -228,7 +201,7 @@ namespace formulae.engine
                 }
             }
         }
-        
+
         #endregion
     }
 }

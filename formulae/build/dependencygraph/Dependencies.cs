@@ -7,16 +7,16 @@ namespace formulae.build.dependencygraph
 {
     public class Dependencies
     {
-        public Graph Graph { get; private set; }
-        
-        public Graph ReverseGraph { get; private set; }
-        
-        public Dictionary<string,Dependency> DependenciesDictionary { get; }
-
         public Dependencies()
         {
             DependenciesDictionary = new Dictionary<string, Dependency>();
         }
+
+        public Graph Graph { get; private set; }
+
+        public Graph ReverseGraph { get; private set; }
+
+        public Dictionary<string, Dependency> DependenciesDictionary { get; }
 
         public void Dump()
         {
@@ -41,9 +41,8 @@ namespace formulae.build.dependencygraph
                 }
 
                 dep = DependenciesDictionary[vardeps.Key.Name];
-                
+
                 if (vardeps.Value.Any())
-                {
                     foreach (var variable in vardeps.Value)
                     {
                         Dependency vardep = null;
@@ -52,32 +51,22 @@ namespace formulae.build.dependencygraph
                             vardep = new Dependency(variable);
                             DependenciesDictionary[variable.Name] = vardep;
                         }
-                        
+
                         dep.AddDependency(DependenciesDictionary[variable.Name]);
                     }
-                }
             }
 
             Graph = new Graph();
-            
-            foreach (var dep in DependenciesDictionary)
-            {
-                Graph.AddVertex(dep.Key);
-            }
+
+            foreach (var dep in DependenciesDictionary) Graph.AddVertex(dep.Key);
             foreach (var dep in DependenciesDictionary)
             {
                 var vertex = Graph.GetVertex(dep.Key);
-                foreach (var x in dep.Value.Dependencies)
-                {
-                    vertex.AddVertice(Graph.GetVertex(x.Variable.Name));
-                }
+                foreach (var x in dep.Value.Dependencies) vertex.AddVertice(Graph.GetVertex(x.Variable.Name));
             }
 
             var cyclic = Graph.CheckCycle();
-            if (!cyclic)
-            {
-                buildReverseGraph();
-            }
+            if (!cyclic) buildReverseGraph();
 
             return cyclic;
         }
@@ -85,18 +74,13 @@ namespace formulae.build.dependencygraph
         private void buildReverseGraph()
         {
             ReverseGraph = new Graph();
-            foreach (var graphVertex in Graph.Vertexes)
-            {
-                ReverseGraph.AddVertex(graphVertex.Name);
-            }
-            
+            foreach (var graphVertex in Graph.Vertexes) ReverseGraph.AddVertex(graphVertex.Name);
+
             foreach (var graphVertex in Graph.Vertexes)
             {
                 var vertex = ReverseGraph.GetVertex(graphVertex.Name);
                 foreach (var vertice in graphVertex.Vertices)
-                {
                     ReverseGraph.GetVertex(vertice.Target.Name).AddVertice(graphVertex);
-                }
             }
         }
 
@@ -104,6 +88,5 @@ namespace formulae.build.dependencygraph
         {
             return ReverseGraph.GetVertex(name).Vertices.Select(x => x.Target).ToList();
         }
-
     }
 }

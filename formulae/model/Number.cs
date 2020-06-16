@@ -4,14 +4,17 @@ namespace formulae.model
 {
     public class Number : IExpression
     {
-        public double Value { get; set; }
-
         public Number(double value)
         {
             Value = value;
         }
 
-        public List<Variable> GetVariables() => new List<Variable>();
+        public double Value { get; set; }
+
+        public List<Variable> GetVariables()
+        {
+            return new List<Variable>();
+        }
 
         public FormulaType Type { get; set; } = FormulaType.Number;
     }

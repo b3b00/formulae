@@ -1,19 +1,13 @@
-﻿using System; 
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Resources;
 
 namespace formulae.build.dependencygraph
 {
     // A C# Program to detect cycle in a graph 
-  
 
-    public class Vertex { 
 
-        public string Name { get; set; }
-        
-        public bool Visited { get; set; }
-
+    public class Vertex
+    {
         public List<Vertice> Vertices;
 
         public Vertex(string name)
@@ -22,21 +16,22 @@ namespace formulae.build.dependencygraph
             Vertices = new List<Vertice>();
         }
 
+        public string Name { get; set; }
+
+        public bool Visited { get; set; }
+
+        public bool IsIndependant => Vertices.Count == 0;
+
         public void AddVertice(Vertex target)
         {
             Vertices.Add(new Vertice(target));
         }
-        
+
         public void Reset()
         {
             Visited = false;
-            foreach (var vertice in Vertices)
-            {
-                vertice.Visited = false;
-            }
+            foreach (var vertice in Vertices) vertice.Visited = false;
         }
-
-        public bool IsIndependant => Vertices.Count == 0;
 
         public override string ToString()
         {

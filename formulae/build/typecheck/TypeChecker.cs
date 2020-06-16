@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using formulae.build.dependencygraph;
 using formulae.build.parse;
@@ -11,6 +10,7 @@ namespace formulae.build.typecheck
 {
     public class TypeChecker
     {
+        public Dictionary<string, FormulaType> VariableTypes { get; private set; }
 
         private FormulaType GetType(IExpression expression)
         {
@@ -22,14 +22,13 @@ namespace formulae.build.typecheck
                 BinaryExpression b => GetBinaryOperationType(b),
                 Variable v => VariableTypes.ContainsKey(v.Name) ? VariableTypes[v.Name] : FormulaType.Error,
                 _ => FormulaType.Error
-                };
+            };
         }
 
         private FormulaType GetBinaryOperationType(BinaryExpression expression)
         {
             switch (expression.Operation)
             {
-                
                 case FormulaToken.GT:
                 case FormulaToken.LT:
                 case FormulaToken.GTE:
@@ -39,27 +38,21 @@ namespace formulae.build.typecheck
                     var leftType = GetType(expression.Left);
                     var rightType = GetType(expression.Left);
                     if (leftType != rightType)
-                    {
                         throw new Exception($"unknown operation {leftType} {expression.Operation} {rightType}");
-                    }
 
                     if (leftType != FormulaType.Number)
-                    {
                         throw new Exception($"unknown operation {leftType} {expression.Operation} {rightType}");
-                    }
 
                     expression.Type = FormulaType.Bool;
                     return FormulaType.Bool;
-                }   
+                }
                 case FormulaToken.EQ:
                 case FormulaToken.NEQ:
                 {
                     var leftType = GetType(expression.Left);
                     var rightType = GetType(expression.Left);
                     if (leftType != rightType)
-                    {
                         throw new Exception($"unknown operation {leftType} {expression.Operation} {rightType}");
-                    } 
                     expression.Type = FormulaType.Bool;
                     return FormulaType.Bool;
                 }
@@ -75,34 +68,25 @@ namespace formulae.build.typecheck
                 {
                     expression.Type = FormulaType.Error;
                     return FormulaType.Error;
-                }   
+                }
             }
         }
-
-        
-        public Dictionary<string, FormulaType> VariableTypes { get; private set; }
 
 
         public bool CanbeTyped(Dependency dependency)
         {
-            if (dependency.Dependencies == null || !dependency.Dependencies.Any())
-            {
-                return true;
-            }
+            if (dependency.Dependencies == null || !dependency.Dependencies.Any()) return true;
 
             var canVars = dependency.Dependencies.Select(x => VariableTypes.ContainsKey(x.Variable.Name)).ToList();
 
-            return canVars.Aggregate((bool z, bool y) => z && y);
+            return canVars.Aggregate((z, y) => z && y);
         }
-        
+
         public void Type(Formulae formulae, Dictionary<string, Dependency> dependencies)
         {
-            Dictionary<string, Dependency> dependenciesWork = new Dictionary<string, Dependency>();
-            foreach (var keyValuePair in dependencies)
-            {
-                dependenciesWork[keyValuePair.Key] = keyValuePair.Value;
-            }
-            
+            var dependenciesWork = new Dictionary<string, Dependency>();
+            foreach (var keyValuePair in dependencies) dependenciesWork[keyValuePair.Key] = keyValuePair.Value;
+
             VariableTypes = new Dictionary<string, FormulaType>();
 
             while (dependenciesWork.Any())
