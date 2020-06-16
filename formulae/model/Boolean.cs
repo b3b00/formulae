@@ -12,5 +12,7 @@ namespace formulae.model
         }
         
         public List<Variable> GetVariables() => new List<Variable>();
+
+        public FormulaType Type { get; set; } = FormulaType.Bool;
     }
 }

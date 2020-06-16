@@ -5,6 +5,7 @@ using formulae.build.typecheck;
 using formulae.engine;
 using formulae.model;
 using sly.parser.generator;
+using Xunit;
 
 namespace program
 {
@@ -34,10 +35,16 @@ C = 3 + 3
                     TypeChecker checker = new TypeChecker();
                     checker.Type(form, depbuilder.DependenciesDictionary);
                     
-                    Engine engine = new Engine(depbuilder,form);
-                    Console.WriteLine(engine.ToString());
-                    engine.Set("C",5.0);
-                    Console.WriteLine(engine.ToString());
+                    FormulaeEngine formulaeEngine = new FormulaeEngine(depbuilder,form);
+                    Console.WriteLine(formulaeEngine.ToString());
+                    Assert.Equal(6.0,formulaeEngine.GetValue("C"));
+                    Assert.Equal(8.0,formulaeEngine.GetValue("B"));
+                    Assert.Equal(9.0,formulaeEngine.GetValue("A"));
+                    formulaeEngine.Set("C",10.0);
+                    Assert.Equal(10.0,formulaeEngine.GetValue("C"));
+                    Assert.Equal(12.0,formulaeEngine.GetValue("B"));
+                    Assert.Equal(13.0,formulaeEngine.GetValue("A"));
+                    Console.WriteLine(formulaeEngine.ToString());
                     ;
                 }
                 else {
@@ -52,3 +59,4 @@ C = 3 + 3
         }
     }
 }
+

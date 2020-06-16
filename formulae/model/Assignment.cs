@@ -11,5 +11,7 @@
             Variable = variable;
             Expression = expression;
         }
+        
+        public FormulaType Type { get; set; }
     }
 }

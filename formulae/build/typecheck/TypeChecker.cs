@@ -47,6 +47,8 @@ namespace formulae.build.typecheck
                     {
                         throw new Exception($"unknown operation {leftType} {expression.Operation} {rightType}");
                     }
+
+                    expression.Type = FormulaType.Bool;
                     return FormulaType.Bool;
                 }   
                 case FormulaToken.EQ:
@@ -58,6 +60,7 @@ namespace formulae.build.typecheck
                     {
                         throw new Exception($"unknown operation {leftType} {expression.Operation} {rightType}");
                     } 
+                    expression.Type = FormulaType.Bool;
                     return FormulaType.Bool;
                 }
                 case FormulaToken.PLUS:
@@ -65,10 +68,12 @@ namespace formulae.build.typecheck
                 case FormulaToken.TIMES:
                 case FormulaToken.DIV:
                 {
+                    expression.Type = FormulaType.Number;
                     return FormulaType.Number;
                 }
                 default:
                 {
+                    expression.Type = FormulaType.Error;
                     return FormulaType.Error;
                 }   
             }
@@ -105,6 +110,7 @@ namespace formulae.build.typecheck
                 var first = dependenciesWork.Values.First(x => CanbeTyped(x));
                 var formula = formulae.Formulas.First(x => x.Variable.Name == first.Variable.Name);
                 var type = GetType(formula.Expression);
+                formula.Type = type;
                 VariableTypes[first.Variable.Name] = type;
                 dependenciesWork.Remove(first.Variable.Name);
             }

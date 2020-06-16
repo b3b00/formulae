@@ -22,5 +22,7 @@ namespace formulae.model
         {
             return Left.GetVariables().Concat(Right.GetVariables()).ToList();
         }
+        
+        public FormulaType Type { get; set; }
     }
 }

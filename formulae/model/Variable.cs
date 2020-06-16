@@ -15,6 +15,8 @@ namespace formulae.model
         public List<Variable> GetVariables() => new List<Variable>() {this};
 
         public string ToString() => Name;
+        
+        public FormulaType Type { get; set; }
     }
 }
     

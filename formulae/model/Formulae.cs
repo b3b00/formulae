@@ -11,5 +11,7 @@ namespace formulae.model
         {
             Formulas = formulas.Cast<Assignment>().ToList();
         }
+        
+        public FormulaType Type { get; set; }
     }
 }

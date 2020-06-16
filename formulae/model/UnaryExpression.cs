@@ -17,6 +17,6 @@ namespace formulae.model
         
         public List<Variable> GetVariables() => Expression.GetVariables();
         
-        
+        public FormulaType Type { get; set; }
     }
 }

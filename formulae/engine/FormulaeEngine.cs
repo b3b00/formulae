@@ -10,16 +10,16 @@ using Boolean = formulae.model.Boolean;
 
 namespace formulae.engine
 {
-    public class Engine
+    public class FormulaeEngine
     {
-        private Graph ReverseDependencyGraph;
-        private Graph DependencyGraph;
+        private readonly Graph ReverseDependencyGraph;
+        private readonly Graph DependencyGraph;
         
-        private Formulae Formulae;
+        private readonly Formulae Formulae;
 
-        public Dictionary<string, object> State;
+        private readonly Dictionary<string, object> State;
 
-        public Engine(Dependencies dependencies, Formulae formulae)
+        public FormulaeEngine(Dependencies dependencies, Formulae formulae)
         {
             ReverseDependencyGraph = dependencies.ReverseGraph;
             DependencyGraph = dependencies.Graph;
@@ -45,6 +45,126 @@ namespace formulae.engine
             ;
         }
 
+        
+
+        public void Set(string name, object value)
+        {
+            if (State.ContainsKey(name))
+            {
+                var formula = Formulae.Formulas.First(x => x.Variable.Name == name);
+                if (formula.Type == FormulaType.Bool && !(value is bool))
+                {
+                    throw new Exception("bard type");
+                }
+                if (formula.Type == FormulaType.Number && !(value is double))
+                {
+                    throw new Exception("bard type");
+                }
+                
+                State[name] = value;
+                var vertex = ReverseDependencyGraph.GetVertex(name);
+                //Evaluate(vertex);
+                Propagate(vertex, false);
+            }
+        }
+
+        public string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (var state in State)
+            {
+                builder.AppendLine($"{state.Key} = {state.Value}");
+            }
+
+            return builder.ToString();
+        }
+
+        public object GetValue(string name)
+        {
+            object value = null;
+            State.TryGetValue(name, out value);
+            return value;
+        }
+        
+        
+        #region expressions evaluation
+        
+        private void Propagate(Vertex vertex, bool evaluateVertex = true)
+        {
+            if (evaluateVertex)
+            {
+                Evaluate(vertex);
+            }
+
+            foreach (var vertice in vertex.Vertices)
+            {
+                var target = ReverseDependencyGraph.GetVertex(vertice.Target.Name);
+                Propagate(target);
+            }
+
+        }
+        
+        private object Evaluate(BinaryExpression binary)
+        {
+            object left = Evaluate(binary.Left);
+            object right = Evaluate(binary.Right);
+
+            var leftComparable = ((IComparable) left);
+            var rightComparable = ((IComparable) right);
+            int comparison = leftComparable.CompareTo(rightComparable);
+
+            switch (binary.Operation)
+            {
+                case FormulaToken.MINUS:
+                {
+                    return (double) left - (double) right;
+                }
+                case FormulaToken.PLUS:
+                {
+                    return (double) left + (double) right;
+                }
+                case FormulaToken.TIMES:
+                {
+                    return (double) left * (double) right;
+                }
+                case FormulaToken.DIV:
+                {
+                    return (double) left / (double) right;
+                }
+                case FormulaToken.LT:
+                {
+                    return comparison < 0;
+                }
+                case FormulaToken.LTE:
+                {
+                    return comparison <= 0;
+                }
+                case FormulaToken.GT:
+                {
+                    return comparison > 0;
+                }
+                case FormulaToken.GTE:
+                {
+                    return comparison >= 0;
+                }
+                case FormulaToken.EQ:
+                {
+                    return comparison == 0;
+                }
+                case FormulaToken.NEQ:
+                {
+                    return comparison != 0;
+                }
+                default:
+                {
+                    return null;
+                }
+            }
+
+
+
+        }
+        
         private void Evaluate(Vertex vertex)
         {
             object value = null;
@@ -108,103 +228,7 @@ namespace formulae.engine
                 }
             }
         }
-
-        public void Set(string name, object value)
-        {
-            if (State.ContainsKey(name))
-            {
-                State[name] = value;
-                var vertex = ReverseDependencyGraph.GetVertex(name);
-                //Evaluate(vertex);
-                Propagate(vertex, false);
-            }
-        }
-
-        private void Propagate(Vertex vertex, bool evaluateVertex = true)
-        {
-            if (evaluateVertex)
-            {
-                Evaluate(vertex);
-            }
-
-            foreach (var vertice in vertex.Vertices)
-            {
-                var target = ReverseDependencyGraph.GetVertex(vertice.Target.Name);
-                Propagate(target);
-            }
-
-        }
-
-        private object Evaluate(BinaryExpression binary)
-        {
-            object left = Evaluate(binary.Left);
-            object right = Evaluate(binary.Right);
-
-            var leftComparable = ((IComparable) left);
-            var rightComparable = ((IComparable) right);
-            int comparison = leftComparable.CompareTo(rightComparable);
-
-            switch (binary.Operation)
-            {
-                case FormulaToken.MINUS:
-                {
-                    return (double) left - (double) right;
-                }
-                case FormulaToken.PLUS:
-                {
-                    return (double) left + (double) right;
-                }
-                case FormulaToken.TIMES:
-                {
-                    return (double) left * (double) right;
-                }
-                case FormulaToken.DIV:
-                {
-                    return (double) left / (double) right;
-                }
-                case FormulaToken.LT:
-                {
-                    return comparison < 0;
-                }
-                case FormulaToken.LTE:
-                {
-                    return comparison <= 0;
-                }
-                case FormulaToken.GT:
-                {
-                    return comparison > 0;
-                }
-                case FormulaToken.GTE:
-                {
-                    return comparison >= 0;
-                }
-                case FormulaToken.EQ:
-                {
-                    return comparison == 0;
-                }
-                case FormulaToken.NEQ:
-                {
-                    return comparison != 0;
-                }
-                default:
-                {
-                    return null;
-                }
-            }
-
-
-
-        }
-
-        public string ToString()
-        {
-            StringBuilder builder = new StringBuilder();
-            foreach (var state in State)
-            {
-                builder.AppendLine($"{state.Key} = {state.Value}");
-            }
-
-            return builder.ToString();
-        }
+        
+        #endregion
     }
 }
