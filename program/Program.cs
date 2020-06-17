@@ -6,8 +6,6 @@ using formulae.engine;
 using formulae.model;
 using sly.lexer;
 using sly.parser.generator;
-using sly.parser.generator.visitor;
-using Xunit;
 
 namespace program
 {
@@ -46,13 +44,13 @@ ccc = 3 + 3
 
                     var formulaeEngine = new FormulaeEngine(depbuilder, form);
                     Console.WriteLine(formulaeEngine.ToString());
-                    Assert.Equal(6.0, formulaeEngine.GetValue("C"));
-                    Assert.Equal(8.0, formulaeEngine.GetValue("B"));
-                    Assert.Equal(9.0, formulaeEngine.GetValue("A"));
+                    // Assert.Equal(6.0, formulaeEngine.GetValue("C"));
+                    // Assert.Equal(8.0, formulaeEngine.GetValue("B"));
+                    // Assert.Equal(9.0, formulaeEngine.GetValue("A"));
                     formulaeEngine.Set("C", 10.0);
-                    Assert.Equal(10.0, formulaeEngine.GetValue("C"));
-                    Assert.Equal(12.0, formulaeEngine.GetValue("B"));
-                    Assert.Equal(13.0, formulaeEngine.GetValue("A"));
+                    // Assert.Equal(10.0, formulaeEngine.GetValue("C"));
+                    // Assert.Equal(12.0, formulaeEngine.GetValue("B"));
+                    // Assert.Equal(13.0, formulaeEngine.GetValue("A"));
                     Console.WriteLine(formulaeEngine.ToString());
                     ;
                 }
