@@ -28,7 +28,7 @@ jobs:
     - name: set environment variables
       uses: allenevans/set-env@v1.0.0
       with:
-          TESTS_PATH: './ParserTests'
+          TESTS_PATH: './FormulaeTests'
           PUBLISH_NUGET: true
           RUN_TESTS: true
           MAIN_CSPROJ: 'formulae/formulae.csproj'
@@ -40,7 +40,7 @@ jobs:
     - name: Build with dotnet 
       run: dotnet build --configuration Release 
     - name: Test with dotnet
-      if: env.RUN_TESTS == true
+      if: env.RUN_TESTS
       run: dotnet test -c Debug  #uses msbuild.rsp for coverlet configuration
     - name: coveralls      
       uses: coverallsapp/github-action@v1.1.1
