@@ -44,12 +44,12 @@ jobs:
       run: dotnet test -c Debug  #uses msbuild.rsp for coverlet configuration
     - name: coveralls      
       uses: coverallsapp/github-action@v1.1.1
-      if: matrix.os == 'windows-latest' && env.RUN_TESTS == true
+      if: matrix.os == 'windows-latest' && env.RUN_TESTS
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
         path-to-lcov: ${env.TESTS_PATH}/lcov.info 
     - name: push
-      if: matrix.os == 'ubuntu-latest' && env.PUBLISH_NUGET == true
+      if: matrix.os == 'ubuntu-latest' && env.PUBLISH_NUGET
       id: publish_nuget
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:

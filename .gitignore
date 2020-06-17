@@ -4,3 +4,4 @@ Bin/*
 Obj/*
 .vscode/*
 .idea/*
+lcov.info
