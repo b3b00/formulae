@@ -33,7 +33,7 @@ jobs:
           MAIN_CSPROJ: 'formulae/formulae.csproj'
     - name: Printenv
       run: |
-          echo "publichs=${PUBLIS_NUGET}"
+          echo "publichs=${PUBLISH_NUGET}"
           echo "main=${MAIN_CSPROJ}"
           printenv  
     - name: Build with dotnet 
@@ -47,7 +47,7 @@ jobs:
         # github-token: ${{ secrets.GITHUB_TOKEN }} 
         # path-to-lcov: ${TESTS_PATH}/lcov.info 
     - name: push
-      if: matrix.os == 'windows-latest' 
+      if: matrix.os == 'ubuntu-latest' && env.PUBLISH_NUGET
       id: publish_nuget
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
