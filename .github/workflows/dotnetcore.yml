@@ -34,7 +34,7 @@ jobs:
     - name: Printenv
       run: |
           echo "publichs=${PUBLISH_NUGET}"
-          echo "main=${env.MAIN_CSPROJ}"
+          echo "main=${MAIN_CSPROJ}"
           printenv  
     - name: Build with dotnet 
       run: dotnet build --configuration Release 
