@@ -17,7 +17,6 @@ namespace FormulaeTests
             var parserInstance = new FormulaParser();
             var builder = new ParserBuilder<FormulaToken, IFormula>();
             var parserResult = builder.BuildParser(parserInstance, ParserType.EBNF_LL_RECURSIVE_DESCENT, "formulae");
-            Console.WriteLine(parserResult.Result.Configuration.Dump());
             Assert.True(parserResult.IsOk);
             var source = @"
 
@@ -45,7 +44,6 @@ ccc = 3 + 3
             var parserInstance = new FormulaParser();
             var builder = new ParserBuilder<FormulaToken, IFormula>();
             var parserResult = builder.BuildParser(parserInstance, ParserType.EBNF_LL_RECURSIVE_DESCENT, "formulae");
-            Console.WriteLine(parserResult.Result.Configuration.Dump());
             Assert.True(parserResult.IsOk);
             var source = @"
 
