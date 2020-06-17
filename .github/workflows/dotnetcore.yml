@@ -49,7 +49,7 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
         path-to-lcov: ${env.TESTS_PATH}/lcov.info 
     - name: push
-      if: matrix.os == 'ubuntu-latest' && env.PUBLISH_NUGET
+      if: matrix.os == 'ubuntu-latest' && env.PUBLISH_NUGET == true
       id: publish_nuget
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
