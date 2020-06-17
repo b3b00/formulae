@@ -42,10 +42,9 @@ jobs:
     - name: Test with dotnet
       if: env.RUN_TESTS
       run: dotnet test -c Debug  #uses msbuild.rsp for coverlet configuration
-    - name: coveralls
-      if: env.RUN_TESTS
+    - name: coveralls      
       uses: coverallsapp/github-action@v1.1.1
-      if: matrix.os == 'windows-latest'
+      if: matrix.os == 'windows-latest' && env.RUN_TESTS
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
         path-to-lcov: ${env.TESTS_PATH}/lcov.info 
