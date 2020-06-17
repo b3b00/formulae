@@ -30,6 +30,7 @@ jobs:
       with:
           TESTS_PATH: './ParserTests'
           PUBLISH_NUGET: true
+          RUN_TESTS: false
           MAIN_CSPROJ: 'formulae/formulae.csproj'
     - name: Printenv
       run: |
@@ -38,14 +39,16 @@ jobs:
           printenv  
     - name: Build with dotnet 
       run: dotnet build --configuration Release 
-    # - name: Test with dotnet
-      # run: dotnet test -c Debug  #uses msbuild.rsp for coverlet configuration
-    # - name: coveralls
-      # uses: coverallsapp/github-action@v1.1.1
-      # if: matrix.os == 'windows-latest'
-      # with:
-        # github-token: ${{ secrets.GITHUB_TOKEN }} 
-        # path-to-lcov: ${TESTS_PATH}/lcov.info 
+    - name: Test with dotnet
+      if: env.RUN_TESTS
+      run: dotnet test -c Debug  #uses msbuild.rsp for coverlet configuration
+    - name: coveralls
+      if: env.RUN_TESTS
+      uses: coverallsapp/github-action@v1.1.1
+      if: matrix.os == 'windows-latest'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }} 
+        path-to-lcov: ${env.TESTS_PATH}/lcov.info 
     - name: push
       if: matrix.os == 'ubuntu-latest' && env.PUBLISH_NUGET
       id: publish_nuget
