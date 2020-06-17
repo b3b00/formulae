@@ -27,7 +27,7 @@ namespace FormulaeTests
             Assert.True(parserResult.IsOk);
             var source = @"
 
-aaa = bbb + 1
+aaa = -1 * (bbb + 1)
 bbb = ccc + 2
 ccc = 3 + 3 
 

@@ -47,7 +47,7 @@ ccc = 3 + 3
             Assert.True(parserResult.IsOk);
             var source = @"
 
-aaa = bbb + 1
+aaa = -1 * (bbb + 1)
 bbb = ccc + 2
 ccc = 3 + 3 
 
@@ -66,11 +66,11 @@ ccc = 3 + 3
             var formulaeEngine = new FormulaeEngine(depBuilder, form);
             Assert.Equal(6.0, formulaeEngine.GetValue("ccc"));
             Assert.Equal(8.0, formulaeEngine.GetValue("bbb"));
-            Assert.Equal(9.0, formulaeEngine.GetValue("aaa"));
+            Assert.Equal(-9.0, formulaeEngine.GetValue("aaa"));
             formulaeEngine.Set("ccc", 10.0);
             Assert.Equal(10.0, formulaeEngine.GetValue("ccc"));
             Assert.Equal(12.0, formulaeEngine.GetValue("bbb"));
-            Assert.Equal(13.0, formulaeEngine.GetValue("aaa"));
+            Assert.Equal(-13.0, formulaeEngine.GetValue("aaa"));
             
         }
     }
