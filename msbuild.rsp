@@ -1,0 +1,1 @@
+/p:coverletOutput=./lcov /p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:exclude="[program]*"  FormulaeTests/FormulaeTests.csproj 

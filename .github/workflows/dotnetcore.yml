@@ -30,7 +30,7 @@ jobs:
       with:
           TESTS_PATH: './ParserTests'
           PUBLISH_NUGET: true
-          RUN_TESTS: false
+          RUN_TESTS: true
           MAIN_CSPROJ: 'formulae/formulae.csproj'
     - name: Printenv
       run: |
