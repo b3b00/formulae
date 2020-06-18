@@ -39,15 +39,21 @@ jobs:
           printenv  
     - name: Build with dotnet 
       run: dotnet build --configuration Release 
-    - name: Test with dotnet
+    - name: Test with dotnet    
       if: env.RUN_TESTS
-      run: dotnet test -c Debug  #uses msbuild.rsp for coverlet configuration
+      uses: b3b00/coverlet-action
+      id: 'coverlet'
+      with:
+        testProject: 'FormulaeTests/FormulaeTests.csproj'
+        output: 'lcov.info'
+        outputFormat: 'lcov'
+        excludes: '[program]*'
     - name: coveralls      
       uses: coverallsapp/github-action@v1.1.1
       if: matrix.os == 'windows-latest' && env.RUN_TESTS
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }} 
-        path-to-lcov: ${{env.TESTS_PATH}}/lcov.info 
+        path-to-lcov: ${{ steps.coverlet.outputs.coverageFile }} 
     - name: push
       if: matrix.os == 'ubuntu-latest' && env.PUBLISH_NUGET
       id: publish_nuget
