@@ -49,7 +49,7 @@ jobs:
       if: matrix.os == 'windows-latest' && env.RUN_TESTS
       with:
         github-token: ${{secrets.GITHUB_TOKEN }} 
-        path-to-lcov: ${{steps.coverlet.outpus.coverageFile}} 
+        path-to-lcov: ${{steps.coverlet.outputs.coverageFile}} 
     - name: push
       if: matrix.os == 'windows-latest' && env.PUBLISH_NUGET
       id: publish_nuget
