@@ -41,7 +41,7 @@ jobs:
       run: dotnet build --configuration Release 
     - name: Test with dotnet    
       if: env.RUN_TESTS
-      uses: b3b00/coverlet-action
+      uses: b3b00/coverlet-action@v1
       id: 'coverlet'
       with:
         testProject: 'FormulaeTests/FormulaeTests.csproj'
