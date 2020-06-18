@@ -28,7 +28,7 @@ jobs:
     - name: set environment variables
       uses: allenevans/set-env@v1.0.0
       with:
-          TESTS_PATH: './FormulaeTests/FormulaeTests.csproj'
+          TESTS_PATH: 'FormulaeTests/FormulaeTests.csproj'
           PUBLISH_NUGET: true
           RUN_TESTS: true
           MAIN_CSPROJ: 'formulae/formulae.csproj'    
