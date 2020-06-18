@@ -40,7 +40,7 @@ jobs:
       id: 'coverlet'
       with:
         testProject: ${{env.TESTS_PATH}}
-        output: 'lcov.info'
+        output: 'lcov'
         outputFormat: 'lcov'
         excludes: '[program]*'
     - name: coveralls      
