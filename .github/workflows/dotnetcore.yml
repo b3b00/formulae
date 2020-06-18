@@ -28,7 +28,7 @@ jobs:
     - name: set environment variables
       uses: allenevans/set-env@v1.0.0
       with:
-          TESTS_PATH: './FormulaeTests'
+          TESTS_PATH: './FormulaeTests/FormulaeTests.csproj'
           PUBLISH_NUGET: true
           RUN_TESTS: true
           MAIN_CSPROJ: 'formulae/formulae.csproj'
@@ -44,7 +44,7 @@ jobs:
       uses: b3b00/coverlet-action@1.0.2
       id: 'coverlet'
       with:
-        testProject: 'FormulaeTests/FormulaeTests.csproj'
+        testProject: ${{env.TESTS_PATH}}
         output: 'lcov.info'
         outputFormat: 'lcov'
         excludes: '[program]*'
