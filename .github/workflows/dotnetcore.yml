@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
-          os: [windows-latest,windows-latest]
+          os: [ubuntu-latest,windows-latest]
     steps:
     
 
@@ -37,7 +37,7 @@ jobs:
       run: dotnet build --configuration Release 
     - name: Test with dotnet    
       if: env.RUN_TESTS 
-      uses: b3b00/coverlet-action@1.0.8
+      uses: b3b00/coverlet-action@1.0.9
       id: 'coverlet'
       with:
         testProject: ${{env.TESTS_PROJECT}}
