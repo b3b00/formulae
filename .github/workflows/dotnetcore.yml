@@ -28,10 +28,11 @@ jobs:
     - name: set environment variables
       uses: allenevans/set-env@v1.0.0
       with:
-          TESTS_PATH: 'FormulaeTests/FormulaeTests.csproj'
+          TESTS_PROJECT: 'FormulaeTests/FormulaeTests.csproj'
           PUBLISH_NUGET: true
           RUN_TESTS: true
-          MAIN_CSPROJ: 'formulae/formulae.csproj'    
+          MAIN_CSPROJ: 'formulae/formulae.csproj'
+          TESTS_PATH: 'FormulaeTests'
     - name: Build with dotnet 
       run: dotnet build --configuration Release 
     - name: Test with dotnet    
@@ -39,8 +40,8 @@ jobs:
       uses: b3b00/coverlet-action@1.0.8
       id: 'coverlet'
       with:
-        testProject: ${{env.TESTS_PATH}}
-        output: 'lcov'
+        testProject: ${{env.TESTS_PROJECT}}
+        output: './lcov.info'
         outputFormat: 'lcov'
         excludes: '[program]*'
     - name: coveralls      
@@ -48,7 +49,7 @@ jobs:
       if: matrix.os == 'windows-latest' && env.RUN_TESTS
       with:
         github-token: ${{secrets.GITHUB_TOKEN }} 
-        path-to-lcov: 'FormulaeTests/lcov.info' 
+        path-to-lcov: ${{steps.coverlet.outpus.coverageFile}} 
     - name: push
       if: matrix.os == 'windows-latest' && env.PUBLISH_NUGET
       id: publish_nuget
