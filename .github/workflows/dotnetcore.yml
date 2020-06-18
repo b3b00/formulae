@@ -31,12 +31,7 @@ jobs:
           TESTS_PATH: './FormulaeTests/FormulaeTests.csproj'
           PUBLISH_NUGET: true
           RUN_TESTS: true
-          MAIN_CSPROJ: 'formulae/formulae.csproj'
-    - name: Printenv
-      run: |
-          echo "publichs=${PUBLISH_NUGET}"
-          echo "main=${MAIN_CSPROJ}"
-          printenv  
+          MAIN_CSPROJ: 'formulae/formulae.csproj'    
     - name: Build with dotnet 
       run: dotnet build --configuration Release 
     - name: Test with dotnet    
