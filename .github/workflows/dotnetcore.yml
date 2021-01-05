@@ -33,7 +33,7 @@ jobs:
       id: 'coverlet'
       if: env.RUN_TESTS
       with:
-        testProject: ${env.TESTS_PROJECT}
+        testProject: ${{env.TESTS_PROJECT}}
         output: 'lcov.info'
         outputFormat: 'lcov'
         excludes: '[program]*'
