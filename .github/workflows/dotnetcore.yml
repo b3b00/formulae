@@ -49,7 +49,7 @@ jobs:
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           VERSION_REGEX: <version>(.*)<\/version>  
-          PROJECT_FILE_PATH: ${env.MAIN_CSPROJ}
+          PROJECT_FILE_PATH: ${{env.MAIN_CSPROJ}}
           NUGET_KEY: ${{secrets.NUGET_KEY}}
           VERSION_FILE_PATH: ${{env.MAIN_CSPROJ}}
     - name: Create Release
