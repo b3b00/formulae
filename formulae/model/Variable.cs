@@ -8,7 +8,17 @@ namespace formulae.model
         {
             Name = name;
         }
+        
+        public Variable(string name, FormulaType type)
+        {
+            Name = name;
+            Type = type;
+        }
 
+        public Variable(Variable variable) : this(variable.Name, variable.Type)
+        {
+        }
+        
         public string Name { get; set; }
 
         public List<Variable> GetVariables()

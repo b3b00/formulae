@@ -7,10 +7,10 @@ namespace formulae.model
     {
         public Formulae(List<IFormula> formulas)
         {
-            Formulas = formulas.Cast<Assignment>().ToList();
+            Formulas = formulas.Cast<Formula>().ToList();
         }
 
-        public List<Assignment> Formulas { get; set; }
+        public List<Formula> Formulas { get; set; }
 
         public FormulaType Type { get; set; }
     }

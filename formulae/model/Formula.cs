@@ -1,8 +1,8 @@
 ﻿namespace formulae.model
 {
-    public class Assignment : IFormula
+    public class Formula : IFormula
     {
-        public Assignment(Variable variable, IExpression expression)
+        public Formula(Variable variable, IExpression expression)
         {
             Variable = variable;
             Expression = expression;

@@ -78,7 +78,7 @@ namespace formulae.build.parse
         [Production("formula : ID SET[d] FormulaParser_expressions [ WIN_EOL | IX_EOL ] [d]")]
         public IFormula Formula(Token<FormulaToken> id, IExpression expression)
         {
-            return new Assignment(new Variable(id.Value), expression);
+            return new Formula(new Variable(id.Value), expression);
         }
 
         [Production("emptyLine : [ WIN_EOL | IX_EOL ] [d]")]
