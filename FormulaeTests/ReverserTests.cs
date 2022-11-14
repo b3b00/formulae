@@ -33,6 +33,13 @@ y = -x
         [InlineData(@"
 y = x + 2
 ","x","(y - 2)")]
+        [InlineData(@"
+y = 2 - x
+","x","(2 - y)")]
+        [InlineData(@"
+y = 2 + x
+","x","(y - 2)")]
+        
         public void Reverser(string expression, string variable, string expected)
         {
             BuildParser();

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.AccessControl;
 using formulae.build.parse;
 using formulae.model;
 
@@ -51,13 +53,17 @@ namespace formulae.engine
                 // si body binary : construire un binary : head reverse(bin.op) bin.other_operand
                 if (formula.Expression is BinaryExpression bin)
                 {
-                    if (bin.Left.References(variable.Name))
+                    if (bin.Left.References(variable.Name) && !bin.Right.References(variable.Name))
                     {
                         body = new BinaryExpression(formula.Variable, Opposites[bin.Operation], bin.Right);
                     }
-                    else if (bin.Right.References(variable.Name))
+                    else if (bin.Right.References(variable.Name) && !bin.Left.References(variable.Name))
                     {
-                        body = new BinaryExpression(formula.Variable, Opposites[bin.Operation], bin.Left);
+                        body = new BinaryExpression(bin.Left, Opposites[bin.Operation], formula.Variable);
+                    }
+                    else
+                    {
+                        throw new NotImplementedException("not implemented");
                     }
                 }
 
