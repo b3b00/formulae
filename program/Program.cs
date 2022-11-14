@@ -15,7 +15,7 @@ namespace program
     internal class Program
     {
 
-        private static void Rev(BuildResult<Parser<FormulaToken, IFormula>> parserResult, string formule, string variable)
+        private static void Rev(BuildResult<Parser<FormulaToken, IFormula>> parserResult, string formule, string variable, string expected)
         {
             var formulas = parserResult.Result.Parse(formule);
 
@@ -29,9 +29,10 @@ namespace program
             var reverser = new FormulaReverser();
             var reversed = reverser.Reverse(formula, variable);
             Assert.NotNull(reversed);
-            Assert.Equal("y", reversed.Variable.Name);
-            Assert.IsType<BinaryExpression>(reversed.Expression);
-            var binary = reversed.Expression as BinaryExpression;
+            Assert.Equal(variable, reversed.Variable.Name);
+            var rev = reversed.Expression.Dump();
+            Assert.Equal(expected,rev);
+
         } 
         
         private static void Reverse(BuildResult<Parser<FormulaToken, IFormula>> parserResult)
@@ -39,12 +40,17 @@ namespace program
             Rev(parserResult,@"
 y = -x
 ",
-            "x");
+            "x","(-y)");
 
             Rev(parserResult,@"
 y = x + 2
 ",
-                "x");
+                "x", "(y - 2)");
+            
+            Rev(parserResult,@"
+y = x - 2
+",
+                "x", "(y + 2)");
         }
 
 

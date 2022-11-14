@@ -21,7 +21,26 @@ namespace formulae.model
         }
 
         public FormulaType Type { get; set; }
-        
+        public string Dump()
+        {
+            var dump = "";
+            switch (Operation)
+            {
+                case FormulaToken.NOT:
+                {
+                    dump = "!";
+                    break;
+                }
+                case FormulaToken.MINUS:
+                {
+                    dump = "-";
+                    break;
+                }
+            }
+
+            return "("+dump + Expression.Dump()+")";
+        }
+
         public bool References(string variableName)
         {
             return Expression.References(variableName);

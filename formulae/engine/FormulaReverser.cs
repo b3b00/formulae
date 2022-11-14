@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using formulae.build.parse;
 using formulae.model;
 
@@ -6,6 +6,19 @@ namespace formulae.engine
 {
     public class FormulaReverser : IFormulaReverser
     {
+
+        public Dictionary<FormulaToken, FormulaToken> Opposites = new Dictionary<FormulaToken, FormulaToken>()
+        {
+            { FormulaToken.EQ, FormulaToken.NEQ },
+            { FormulaToken.LTE, FormulaToken.GT },
+            { FormulaToken.GTE, FormulaToken.LT },
+            { FormulaToken.PLUS, FormulaToken.MINUS },
+            { FormulaToken.MINUS, FormulaToken.PLUS },
+            { FormulaToken.TIMES, FormulaToken.DIV },
+            { FormulaToken.DIV, FormulaToken.TIMES },
+            { FormulaToken.AND, FormulaToken.OR },
+            { FormulaToken.OR, FormulaToken.AND },
+        };
 
         public Formula Reverse(Formula formula, string name)
         {
@@ -40,11 +53,11 @@ namespace formulae.engine
                 {
                     if (bin.Left.References(variable.Name))
                     {
-                        
+                        body = new BinaryExpression(formula.Variable, Opposites[bin.Operation], bin.Right);
                     }
                     else if (bin.Right.References(variable.Name))
                     {
-                        
+                        body = new BinaryExpression(formula.Variable, Opposites[bin.Operation], bin.Left);
                     }
                 }
 

@@ -22,5 +22,9 @@ namespace formulae.model
         }
 
         public FormulaType Type { get; set; } = FormulaType.Bool;
+        public string Dump()
+        {
+            return Value.ToString();
+        }
     }
 }

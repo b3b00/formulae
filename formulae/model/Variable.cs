@@ -27,6 +27,10 @@ namespace formulae.model
         }
 
         public FormulaType Type { get; set; }
+        public string Dump()
+        {
+            return Name;
+        }
 
         public override string ToString()
         {

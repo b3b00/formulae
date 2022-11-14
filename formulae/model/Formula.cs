@@ -13,5 +13,9 @@
         public IExpression Expression { get; set; }
 
         public FormulaType Type { get; set; }
+        public string Dump()
+        {
+            return $"{Variable.Name} = {Expression.Dump()}";
+        }
     }
 }
