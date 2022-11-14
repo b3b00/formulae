@@ -38,7 +38,7 @@ namespace formulae.model
                 }
             }
 
-            return "("+dump + Expression.Dump()+")";
+            return $"({OperationStrings.Strings[Operation]}{Expression.Dump()})";
         }
 
         public bool References(string variableName)

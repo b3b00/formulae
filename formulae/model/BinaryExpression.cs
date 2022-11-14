@@ -26,72 +26,8 @@ namespace formulae.model
         public FormulaType Type { get; set; }
         public string Dump()
         {
-            var dump = Left.Dump();
-            switch (Operation)
-            {
-                case FormulaToken.EQ:
-                {
-                    dump += " == ";
-                    break;
-                }
-                case FormulaToken.GT:
-                {
-                    dump += " > ";
-                    break;
-                }
-                case FormulaToken.GTE:
-                {
-                    dump += " >= ";
-                    break;
-                }
-                case FormulaToken.LT:
-                {
-                    dump += " < ";
-                    break;
-                }
-                case FormulaToken.LTE:
-                {
-                    dump += " <= ";
-                    break;
-                }
-                case FormulaToken.NEQ:
-                {
-                    dump += " != ";
-                    break;
-                }
-                case FormulaToken.PLUS:
-                {
-                    dump += " + ";
-                    break;
-                }
-                case FormulaToken.MINUS:
-                {
-                    dump += " - ";
-                    break;
-                }
-                case FormulaToken.DIV:
-                {
-                    dump += " / ";
-                    break;
-                }
-                case FormulaToken.TIMES:
-                {
-                    dump += " * ";
-                    break;
-                }
-                case FormulaToken.OR:
-                {
-                    dump += " || ";
-                    break;
-                }
-                case FormulaToken.AND:
-                {
-                    dump += " && ";
-                    break;
-                }
-            }
-
-            return "("+dump + Right.Dump()+")";
+            var dump = $"({Left.Dump()} {OperationStrings.Strings[Operation]} {Right.Dump()})";
+            return dump;
         }
 
         public bool References(string variableName)
