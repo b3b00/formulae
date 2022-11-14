@@ -24,5 +24,10 @@ namespace formulae.model
         }
 
         public FormulaType Type { get; set; }
+        
+        public bool References(string variableName)
+        {
+            return Left.References(variableName) || Right.References(variableName);
+        }
     }
 }

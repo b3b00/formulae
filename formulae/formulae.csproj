@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <LangVersion>8</LangVersion>
     <version>1.0.2</version>
     <PackageProjectUrl>https://github.com/b3b00/formulae</PackageProjectUrl>
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="sly" Version="2.6.0.1" />
+    <PackageReference Include="sly" Version="2.9.2.1" />
   </ItemGroup>
 
 </Project>

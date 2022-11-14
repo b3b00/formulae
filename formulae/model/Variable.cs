@@ -32,5 +32,10 @@ namespace formulae.model
         {
             return Name;
         }
+        
+        public bool References(string variableName)
+        {
+            return variableName == Name;
+        }
     }
 }

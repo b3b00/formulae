@@ -16,6 +16,11 @@ namespace formulae.model
             return new List<Variable>();
         }
 
+        public bool References(string variableName)
+        {
+            return false;
+        }
+
         public FormulaType Type { get; set; } = FormulaType.Bool;
     }
 }

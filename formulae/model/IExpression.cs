@@ -5,5 +5,7 @@ namespace formulae.model
     public interface IExpression : IFormula
     {
         List<Variable> GetVariables();
+
+        bool References(string variableName);
     }
 }
