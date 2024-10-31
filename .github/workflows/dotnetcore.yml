@@ -32,12 +32,12 @@ jobs:
     - name: Build with dotnet 
       run: dotnet build --configuration Release     
     - name: Test with dotnet
-      uses: b3b00/coverlet-action@d544f8d4a80c251202ff27141002abb028f44e2f
+      uses: b3b00/coverlet-action@5d93e906aef623ee08324ae4208982678cdbb192
       id: 'coverlet'
       if: env.RUN_TESTS
       with:
         testProject: ${{env.TESTS_PROJECT}}
-        output: 'lcov'
+        output: 'lcov.info'
         outputFormat: 'lcov'
         excludes: '[program]*'
     - name: coveralls      
