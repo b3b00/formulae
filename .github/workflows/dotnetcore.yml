@@ -32,7 +32,7 @@ jobs:
     - name: Build with dotnet 
       run: dotnet build --configuration Release     
     - name: Test with dotnet
-      uses: b3b00/coverlet-action@3f78406964f011e1d1300307762a5236b157cba2
+      uses: b3b00/coverlet-action@ab92ea5329d175402440066d316614ea3a1d8858
       id: 'coverlet'
       if: env.RUN_TESTS
       with:
